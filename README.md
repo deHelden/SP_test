@@ -3,8 +3,6 @@
 ## Task
 
 ```
-The test should take you no more than 2.5 hours to complete.
-
 1. ruby_app
     Write a ruby script that:
     a. Receives a log as argument (webserver.log is provided) 
