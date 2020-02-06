@@ -1,5 +1,3 @@
-# SP_test
-
 ## Task
 
 ```
