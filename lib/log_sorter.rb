@@ -6,23 +6,20 @@ class LogSorter
   end
 
   def most_viewed_pages
-    @most_viewed ||= calculate_size(false).sort_by { |_k, v| v.size }.to_h
-
-    most_viewed
+    @most_viewed_pages ||= calculation_by(false)
   end
 
   def uniq_viewed_pages
-    @uniq_views ||= calculate_size(true).sort_by { |_k, v| v.size }.to_h
-
-    uniq_views
+    @uniq_viewed_pages ||= calculation_by(true)
   end
 
   private
-  attr_reader :records, :most_viewed, :uniq_views
+
+  def calculation_by(uniq_key)
+    calculate_size(uniq_key).sort_by { |_k, v| v.size }.to_h
+  end
 
   def calculate_size(uniq)
-    records.each_with_object({}) do |(key, value), list|
-      list[key] = uniq ? value.uniq.size : value.size
-    end
+    @records.transform_values { |value| uniq ? value.uniq.size : value.size }
   end
 end

@@ -3,8 +3,6 @@
 require 'csv'
 
 class LogParser
-  attr_reader :records
-
   def initialize(file)
     check_file_presence(file)
     @file = file
@@ -14,12 +12,14 @@ class LogParser
   def parse
     CSV.foreach(@file) do |line|
       splitted_line = line[0].split(' ')
+
       route = splitted_line[0]
       ip    = splitted_line[1]
+
       @records[route] << ip
     end
 
-    records
+    @records
   end
 
   private

@@ -4,8 +4,9 @@ require 'spec_helper'
 require 'log_presenter'
 
 RSpec.describe LogPresenter do
+  subject { described_class.new(sorted_param: hash, string: str).output_data }
+
   describe '#output_data' do
-    subject { described_class.new(sorted_param: hash, string: str).output_data }
     let(:hash) { { '/help_page/1' => 3 } }
     let(:str) { 'some string' }
 

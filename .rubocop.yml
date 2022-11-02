@@ -1,0 +1,10 @@
+AllCops:
+  Exclude:
+    - "spec/spec_helper.rb"
+
+Style/Documentation:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 81
+  IgnoredPatterns: ['\A#']

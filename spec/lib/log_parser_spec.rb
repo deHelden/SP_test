@@ -6,16 +6,18 @@ require 'log_parser'
 RSpec.describe LogParser do
   context 'file not found' do
     subject { described_class.new(file) }
+
     let(:file) { 'no/file/here.log' }
     let(:error_message) { "No file detected @ #{file}" }
 
     it 'raise an error' do
-      expect { subject }.to raise_error(RuntimeError, "No file detected @ #{file}")
+      expect { subject }.to raise_error(RuntimeError, error_message)
     end
   end
 
   describe '#parse' do
     subject { described_class.new(file).parse }
+
     let(:file) { 'spec/fixtures/webserver_template.log' }
     let(:expected_results) do
       {
