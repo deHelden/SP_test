@@ -31,6 +31,8 @@
 - Execute ruby script with:
 
 `ruby parser.rb webserver.log`
+OR
+`ruby parser.rb spec/fixtures/webserver_template.log`
 
 #### Rspec
 
