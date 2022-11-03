@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LogSorter
+class LogStatistic
   def initialize(records)
     @records = records
   end

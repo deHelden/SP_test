@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 require_relative 'lib/log_parser'
-require_relative 'lib/log_sorter'
+require_relative 'lib/log_statistic'
+require_relative 'lib/log_formatter'
 require_relative 'lib/log_presenter'
 
 parser = LogParser.new(ARGV[0])
@@ -9,10 +10,12 @@ records = parser.parse
 
 puts "\n"
 puts 'most viewed'
-most_viewed = LogSorter.new(records).most_viewed_pages
-LogPresenter.new(sorted_param: most_viewed, string: 'most viewed').output_data
+most_viewed = LogStatistic.new(records).most_viewed_pages
+most_viewed_formatted_data =  LogFormatter.new(sorted_param: most_viewed, string: 'most viewed').array_string_format
+LogPresenter.new(most_viewed_formatted_data).console_output
 
 puts "\n"
 puts 'unique views'
-uniq_views = LogSorter.new(records).uniq_viewed_pages
-LogPresenter.new(sorted_param: uniq_views, string: 'uniq views').output_data
+uniq_views = LogStatistic.new(records).uniq_viewed_pages
+uniq_views_formatted_data = LogFormatter.new(sorted_param: uniq_views, string: 'uniq views').array_string_format
+LogPresenter.new(uniq_views_formatted_data).console_output

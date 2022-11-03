@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'log_sorter'
+require 'log_statistic'
 
-RSpec.describe LogSorter do
+RSpec.describe LogStatistic do
   let(:records) do
     {
       '/help_page/1' => %w[126.318.035.038 929.398.951.889 722.247.931.582],

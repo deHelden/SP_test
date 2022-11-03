@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
+# class presents data for different outputs
 class LogPresenter
-  def initialize(args = {})
-    @hash = args.fetch(:sorted_param)
-    @string = args.fetch(:string)
+  def initialize(array)
+    @array = array
   end
 
-  def output_data
-    @hash.each do |route, count|
-      puts " #{route.ljust(15)} | #{count} #{@string} "
-    end
+  def console_output
+    puts @array
   end
+
+  # db_output, json_output, etc.
 end
