@@ -8,7 +8,7 @@ require_relative 'lib/log_presenter'
 require 'csv'
 
 file = ARGV[0]
-raise "No file detected @ #{file}" unless File.file?(file)
+raise "No file detected @ #{file}" if file == nil || !File.file?(file)
 
 arr_of_arrs = CSV.read(file)
 records = LogParser.new(arr_of_arrs).parse
