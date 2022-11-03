@@ -3,14 +3,13 @@
 require 'csv'
 
 class LogParser
-  def initialize(file)
-    check_file_presence(file)
-    @file = file
+  def initialize(arr_of_arrs)
+    @arr_of_arrs = arr_of_arrs
     @records = Hash.new { |h, k| h[k] = [] }
   end
 
   def parse
-    CSV.foreach(@file) do |line|
+    @arr_of_arrs.each do |line|
       splitted_line = line[0].split(' ')
 
       route = splitted_line[0]
@@ -20,11 +19,5 @@ class LogParser
     end
 
     @records
-  end
-
-  private
-
-  def check_file_presence(file)
-    raise "No file detected @ #{file}" unless File.file?(file)
   end
 end

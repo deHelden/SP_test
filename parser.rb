@@ -5,8 +5,13 @@ require_relative 'lib/log_statistic'
 require_relative 'lib/log_formatter'
 require_relative 'lib/log_presenter'
 
-parser = LogParser.new(ARGV[0])
-records = parser.parse
+require 'csv'
+
+file = ARGV[0]
+raise "No file detected @ #{file}" unless File.file?(file)
+
+arr_of_arrs = CSV.read(file)
+records = LogParser.new(arr_of_arrs).parse
 
 puts "\n"
 puts 'most viewed'
