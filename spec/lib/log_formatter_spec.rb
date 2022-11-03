@@ -5,7 +5,7 @@ require 'log_formatter'
 require 'pry'
 
 RSpec.describe LogFormatter do
-  subject { described_class.new(sorted_param: hash, string: str).output_data }
+  subject { described_class.new(sorted_param: hash, string: str).array_string_format }
 
   describe '#output_data' do
     let(:hash) do

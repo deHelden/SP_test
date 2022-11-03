@@ -11,11 +11,15 @@ records = parser.parse
 puts "\n"
 puts 'most viewed'
 most_viewed = LogStatistic.new(records).most_viewed_pages
-most_viewed_formatted_data =  LogFormatter.new(sorted_param: most_viewed, string: 'most viewed').array_string_format
+most_viewed_formatted_data = LogFormatter
+                             .new(sorted_param: most_viewed, string: 'most viewed')
+                             .array_string_format
 LogPresenter.new(most_viewed_formatted_data).console_output
 
 puts "\n"
 puts 'unique views'
 uniq_views = LogStatistic.new(records).uniq_viewed_pages
-uniq_views_formatted_data = LogFormatter.new(sorted_param: uniq_views, string: 'uniq views').array_string_format
+uniq_views_formatted_data = LogFormatter
+                            .new(sorted_param: uniq_views, string: 'uniq views')
+                            .array_string_format
 LogPresenter.new(uniq_views_formatted_data).console_output
