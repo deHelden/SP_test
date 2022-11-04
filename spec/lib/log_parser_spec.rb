@@ -4,8 +4,8 @@ require 'spec_helper'
 require 'log_parser'
 
 RSpec.describe LogParser do
-  describe '#parse' do
-    subject { described_class.new(array).parse }
+  describe '#parse_log' do
+    subject { described_class.new(array).parse_log }
 
     let(:array) do
       [

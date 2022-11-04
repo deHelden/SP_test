@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
-
 # This class returns formatted data as [string]
 class LogFormatter
   def initialize(args = {})
