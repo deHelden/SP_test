@@ -18,7 +18,7 @@ RSpec.describe LogStatsBuilder do
 
   describe '#output_statistic' do
     context 'most_viewed' do
-      let(:section) {:total_views}
+      let(:section) { :total_views }
 
       it 'creates instance of Formatter & Presenter service' do
         allow(LogPresenter).to receive_message_chain(:new, :console_output)
