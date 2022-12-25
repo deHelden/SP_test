@@ -1,47 +1,71 @@
 # frozen_string_literal: true
 
-require_relative 'log_parser'
-require_relative 'log_statistic'
+require_relative 'log_route'
 require_relative 'log_formatter'
 require_relative 'log_presenter'
+require 'csv'
 
 class LogStatsBuilder
-  attr_reader :records
+  attr_reader :routes
 
-  def initialize(data:, format:)
-    @data = data
+  def initialize(file_path:, format:)
+    @file_path = file_path
     @format = format
-    @records = log_parse
+    @routes = Hash.new { |h, k| h[k] = [] }
   end
 
   def build
-    most_viewed_stats
-    uniq_viewed_stats
+    parse_file
+    count_metrics
+    output_most_viewed_stats
+    output_uniq_viewed_stats
   end
 
-  def most_viewed_stats
+  def parse_file
+    #  File#each receives a block, passing each line as the argument of the block.
+    #  This so far is the best method to process a file sequentially,
+    #  because the lines are not all loaded into memory at the same time.
+    CSV.open(@file_path, 'r', col_sep: "\s").each do |page, ip|
+      route = LogRoute.new(path: page)
+      @routes[route] << ip
+    end
+  end
+
+  def count_metrics
+    @routes.each do |route, visits|
+      route.total_views_count = visits.count
+      route.uniq_views_count = Set.new(visits).count
+    end
+  end
+
+  def output_statistic(section)
+    views = if section == :total_views
+              @routes.map { |route, _visits| { route.path => route.total_views_count } }.reduce({}, :merge)
+            elsif section == :unique_views
+              @routes.map { |route, _visits| { route.path => route.uniq_views_count } }.reduce({}, :merge)
+            else
+              raise 'new section is not defined'
+            end
+
+    views_formatted = LogFormatter.new(sorted_param: views, title: section.to_s)
+                                  .array_string_format
+
+    LogPresenter.new(views_formatted).console_output
+  end
+
+  def output_most_viewed_stats
+    section = :total_views
     puts "\n"
     puts 'most viewed'
-    most_viewed = LogStatistic.new(records).most_viewed_pages
-    most_viewed_formatted_data = LogFormatter
-                                 .new(sorted_param: most_viewed, string: 'most viewed')
-                                 .array_string_format
-    LogPresenter.new(most_viewed_formatted_data).console_output
+
+    output_statistic(section)
   end
 
-  def uniq_viewed_stats
+  def output_uniq_viewed_stats
+    section = :unique_views
     puts "\n"
     puts 'unique views'
-    uniq_views = LogStatistic.new(records).uniq_viewed_pages
-    uniq_views_formatted_data = LogFormatter
-                                .new(sorted_param: uniq_views, string: 'uniq views')
-                                .array_string_format
-    LogPresenter.new(uniq_views_formatted_data).console_output
-  end
 
-  private
-
-  def log_parse
-    LogParser.new(@data).parse_log if @format == :csv
+    output_statistic(section)
   end
 end

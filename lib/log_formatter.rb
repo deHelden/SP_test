@@ -4,12 +4,12 @@
 class LogFormatter
   def initialize(args = {})
     @hash = args.fetch(:sorted_param)
-    @string = args.fetch(:string)
+    @title = args.fetch(:title)
   end
 
   def array_string_format
     @hash.each_with_object([]) do |(route, count), obj|
-      obj << "#{route.ljust(15)} | #{count} #{@string} "
+      obj << "#{route.ljust(15)} | #{count} #{@title} "
     end
   end
 

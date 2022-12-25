@@ -2,10 +2,9 @@
 
 require 'spec_helper'
 require 'log_formatter'
-require 'pry'
 
 RSpec.describe LogFormatter do
-  subject { described_class.new(sorted_param: hash, string: str).array_string_format }
+  subject { described_class.new(sorted_param: hash, title: str).array_string_format }
 
   describe '#output_data' do
     let(:hash) do

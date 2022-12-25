@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
 require_relative 'lib/log_stats_builder'
-require 'csv'
 
-file = ARGV[0]
-raise "No file detected @ #{file}" if file.nil? || !File.file?(file)
+file_path = ARGV[0]
+raise "No file_path detected @ #{file_path}" if file_path.nil? || !File.file?(file_path)
 
-extension = File.extname(file)
+extension = File.extname(file_path)
 
 if extension == '.log'
-  file_content = CSV.read(file)
-  LogStatsBuilder.new(data: file_content, format: :csv).build
+  LogStatsBuilder.new(file_path: file_path, format: :csv).build
 else
   puts "Unknown mushroom @ (#{extension}). Sorry, I can't eat this right now"
 end
